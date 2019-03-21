@@ -19,7 +19,7 @@ RUN yarn && yarn task build:server:binary
 FROM ubuntu:18.10
 WORKDIR /root/project
 COPY --from=0 /src/packages/server/cli-linux-x64 /usr/local/bin/code-server
-EXPOSE 8443
+EXPOSE 80
 
 RUN apt-get update && apt-get install -y \
 	openssl \
@@ -30,4 +30,4 @@ RUN locale-gen en_US.UTF-8
 # We unfortunately cannot use update-locale because docker will not use the env variables
 # configured in /etc/default/locale so we need to set it manually.
 ENV LANG=en_US.UTF-8
-ENTRYPOINT ["code-server"]
+ENTRYPOINT ["code-server", "port=80"]
