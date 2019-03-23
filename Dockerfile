@@ -13,10 +13,10 @@ COPY . .
 
 # In the future, we can use https://github.com/yarnpkg/rfcs/pull/53 to make yarn use the node_modules
 # directly which should be fast as it is slow because it populates its own cache every time.
-RUN yarn && yarn task build:server:binary
+RUN yarn && yarn --no-cache task build:server:binary
 
 # We deploy with ubuntu so that devs have a familiar environment.
-FROM ubuntu:18.10
+FROM phusion/baseimage:master
 WORKDIR /root/project
 COPY --from=0 /src/packages/server/cli-linux-x64 /usr/local/bin/code-server
 EXPOSE 80
@@ -26,8 +26,10 @@ RUN apt-get update && apt-get install -y \
 	net-tools \
 	git \
 	locales
+	
 RUN locale-gen es_ES.UTF-8
-# We unfortunately cannot use update-locale because docker will not use the env variables
-# configured in /etc/default/locale so we need to set it manually.
+
+RUN echo 2 > /proc/sys/net/ipv4/tcp_mtu_probing && echo 2048 > /proc/sys/net/ipv4/tcp_base_mss
+
 ENV LANG=es_ES.UTF-8
 ENTRYPOINT ["code-server", "--port=80"]
