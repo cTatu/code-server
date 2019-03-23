@@ -20,7 +20,7 @@ EXPOSE 80
 	
 RUN locale-gen es_ES.UTF-8
 
-RUN echo 2 > /proc/sys/net/ipv4/tcp_mtu_probing && echo 2048 > /proc/sys/net/ipv4/tcp_base_mss
+# RUN echo 2 > /proc/sys/net/ipv4/tcp_mtu_probing && echo 2048 > /proc/sys/net/ipv4/tcp_base_mss
 
 ENV LANG=es_ES.UTF-8
 ENTRYPOINT ["code-server", "--port=80", "--allow-http", "--no-auth"]
