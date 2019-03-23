@@ -1,6 +1,14 @@
 FROM phusion/baseimage:master
 
 WORKDIR /usr/local/bin
+
+RUN apt-get update && apt-get install -y \
+	openssl \
+	net-tools \
+	git \
+	locales \
+	wget
+
 RUN curl -s https://api.github.com/repos/codercom/code-server/releases/latest \
 	| grep "browser_download_url" \
 	| grep "linux-x64" \
@@ -9,12 +17,6 @@ RUN curl -s https://api.github.com/repos/codercom/code-server/releases/latest \
 	
 WORKDIR /root/project
 EXPOSE 80
-
-RUN apt-get update && apt-get install -y \
-	openssl \
-	net-tools \
-	git \
-	locales
 	
 RUN locale-gen es_ES.UTF-8
 
