@@ -1,4 +1,4 @@
-FROM phusion/baseimage:master
+FROM ubuntu:18.04
 
 WORKDIR /usr/local/bin
 
@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install -y \
 	git \
 	locales \
 	sshfs \
-	dumb-init
+	dumb-init \
+	wget \
+	curl
 
 RUN curl -s https://api.github.com/repos/codercom/code-server/releases/latest \
 	| grep "browser_download_url" \
