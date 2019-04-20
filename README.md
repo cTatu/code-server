@@ -2,7 +2,7 @@
 
 **Run it directly:**
 ```bash
-code-server-[OSversion] --port=80 --allow-http --no-auth
+code-server-[OSversion] --port=80 --allow-http --password "yourpassword"
 ```
 
 **Using Docker:**
